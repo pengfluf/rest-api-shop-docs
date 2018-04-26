@@ -37,8 +37,8 @@
         "summary": "Sign Up",
         "description": "",
         "operationId": "signup",
-        "consumes": "application/json",
-        "produces": "application/json",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
         "parameters": [{
           "name": "email",
           "in": "body",
@@ -106,8 +106,8 @@
         "summary": "Login",
         "description": "",
         "operationId": "login",
-        "consumes": "application/json",
-        "produces": "application/json",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
         "parameters": [{
           "name": "email",
           "in": "body",
@@ -169,11 +169,11 @@
         "summary": "Get All Products",
         "description": "",
         "operationId": "getAllProducts",
-        "consumes": "application/json",
-        "produces": "application/json",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
         "responses": {
           "200": {
-            "description": "All products have received.",
+            "description": "All products successfully received.",
             "schema": {
               "type": "object",
               "properties": {
@@ -200,6 +200,391 @@
                   }
                 }
               }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Products"],
+        "summary": "Create Product",
+        "description": "",
+        "operationId": "createProduct",
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"],
+        "parameters": [{
+          "name": "name",
+          "in": "body",
+          "description": "Product Name",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "price",
+          "in": "body",
+          "description": "Product Price",
+          "required": true,
+          "type": "integer",
+          "format": "int32"
+        },
+        {
+          "name": "productImage",
+          "in": "body",
+          "description": "Product Image",
+          "required": false,
+          "type": "string"
+        }
+      ],
+        "responses": {
+          "201": {
+            "description": "Product successfully created",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/Product"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "request": {
+                      "$ref": "#definitions/Request"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/{productID}": {
+      "get": {
+        "tags": ["Products"],
+        "summary": "Get Product",
+        "description": "",
+        "operationId": "getProduct",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Product successfully received.",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/Product"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "request": {
+                      "$ref": "#definitions/Request"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "404": {
+            "description": "There's no such product.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+              },
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Products"],
+        "summary": "Update Product",
+        "description": "",
+        "operationId": "updateProduct",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [{
+          "name": "name",
+          "in": "body",
+          "description": "Product Name",
+          "required": false,
+          "type": "string"
+        },
+        {
+          "name": "price",
+          "in": "body",
+          "description": "Product Price",
+          "required": false,
+          "type": "integer",
+          "format": "int32"
+        },
+        {
+          "name": "productImage",
+          "in": "body",
+          "description": "Product Image",
+          "required": false,
+          "type": "string"
+        }
+      ],
+        "responses": {
+          "200": {
+            "description": "Product successfully updated.",
+            "schema": {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "_id": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "request": {
+                      "$ref": "#definitions/Request"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Products"],
+        "summary": "Delete Product",
+        "description": "",
+        "operationId": "deleteProduct",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Product successfully deleted.",
+            "schema": {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "_id": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "request": {
+                      "$ref": "#definitions/Request"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders": {
+      "get": {
+        "tags": ["Orders"],
+        "summary": "Get All Orders",
+        "description": "",
+        "operationId": "getAllOrders",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "All orders successfully received.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ordersAmount": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "orders": {
+                  "type": "array",
+                  "items": {
+                      "allOf": [
+                        {
+                          "$ref": "#/definitions/Order"
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "request": {
+                              "$ref": "#definitions/Request"
+                            }
+                          }
+                        }
+                      ],
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Orders"],
+        "summary": "Create order",
+        "description": "",
+        "operationId": "createProduct",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [{
+          "name": "productID",
+          "in": "body",
+          "description": "Product ID",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "quantity",
+          "in": "body",
+          "description": "Product Quantity",
+          "required": false,
+          "type": "integer",
+          "format": "int32",
+          "default": 1
+        }
+      ],
+        "responses": {
+          "201": {
+            "description": "Order successfully created.",
+            "schema": {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                    },
+                    "_id": {
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "product": {
+                      "type": "string",
+                      "description": "Product ID which this order related to."
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "request": {
+                      "$ref": "#definitions/Request"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "404": {
+            "description": "Product with this ID doesn't exist.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+              },
             }
           },
           "500": {
