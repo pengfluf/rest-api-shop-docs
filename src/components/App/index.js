@@ -1,9 +1,11 @@
 import React from 'react';
 
+import Swagger from '../Swagger';
+
 function App() {
   return (
-    <div>
-      App
+    <div className="app">
+      <Swagger />
     </div>
   );
 }

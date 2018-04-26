@@ -1,0 +1,246 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a documentation for REST API Shop.",
+    "version": "1.0.0",
+    "title": "REST API Shop",
+    "contact": {
+      "name": "Peng Fluf",
+      "url": "https://github.com/pengfluf",
+      "email": "pengfluf@tutanota.com"
+    },
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "host": "localhost:3002",
+  "basePath": "/v2",
+  "tags": [
+    {
+      "name": "User",
+      "description": "Sign Up, Login, Delete Account",
+    },
+    {
+      "name": "Products",
+      "description": "Actions with products",
+    },
+    {
+      "name": "Orders",
+      "description": "Actions with orders related to specific products",
+    }
+  ],
+  "schemes": ["http"],
+  "paths": {
+    "/user/signup": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Sign Up",
+        "description": "",
+        "operationId": "signup",
+        "consumes": "application/json",
+        "produces": "application/json",
+        "parameters": [{
+          "name": "email",
+          "in": "body",
+          "description": "User Email",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "password",
+          "in": "body",
+          "description": "User Password",
+          "required": true,
+          "type": "string"
+        }
+      ],
+        "responses": {
+          "201": {
+            "description": "Signed up successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "_id": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+              }
+            }
+          },
+          "409": {
+            "description": "This email address is already taken.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Signing up failed.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+    },
+    "/user/login": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Login",
+        "description": "",
+        "operationId": "login",
+        "consumes": "application/json",
+        "produces": "application/json",
+        "parameters": [{
+          "name": "email",
+          "in": "body",
+          "description": "User Email",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "password",
+          "in": "body",
+          "description": "User Password",
+          "required": true,
+          "type": "string"
+        }
+      ],
+        "responses": {
+          "200": {
+            "description": "Authorized successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "token": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+    }
+  },
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "api_key",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+        },
+        "email": {
+          "type": "string",
+        },
+        "password": {
+          "type": "string",
+        }
+      },
+      "required": [
+        "email",
+        "password"
+      ]
+    },
+    "Product": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+        },
+        "price": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "productImage": {
+          "type": "string",
+        },
+      },
+      "required": [
+        "name",
+        "price"
+      ]
+    },
+    "Order": {
+      "type": "object",
+      "properties": {
+        "product": {
+          "$ref": "#/definitions/Product"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32",
+          "default": "1"
+        }
+      },
+      "required": [
+        "product"
+      ]
+    },
+    "ApiResponse": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Сan be either 1 or 0. 1 – OK, 0 – NOT OK."
+        },
+        "message": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string",
+          "description": "JSON Web Token"
+        }
+      }
+    }
+  }
+}
