@@ -138,6 +138,95 @@
               }
             }
           },
+          "500": {
+            "description": "Internal Server Error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+    },
+    "/user/{userID}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get Account Info",
+        "description": "You can get account info if it's your account only.",
+        "operationId": "getAccountInfo",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Account info successfully received.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+              },
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["User"],
+        "summary": "Delete Account",
+        "description": "",
+        "operationId": "deleteAccount",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Account successfully deleted.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ok": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "401": {
             "description": "Unauthorized.",
             "schema": {
@@ -446,6 +535,22 @@
               ]
             }
           },
+          "404": {
+            "description": "Product with this ID doesn't exist.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+              },
+            }
+          },
           "500": {
             "description": "Internal Server Error.",
             "schema": {
@@ -573,6 +678,130 @@
           },
           "404": {
             "description": "Product with this ID doesn't exist.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+              },
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders/{orderID}": {
+      "get": {
+        "tags": ["Orders"],
+        "summary": "Get Order",
+        "description": "",
+        "operationId": "getOrder",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Order successfully received.",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/Order"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "request": {
+                      "$ref": "#definitions/Request"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "404": {
+            "description": "Order with this ID doesn't exist.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+              },
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Orders"],
+        "summary": "Delete Order",
+        "description": "",
+        "operationId": "deleteOrder",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Order successfully deleted.",
+            "schema": {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "_id": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "request": {
+                      "$ref": "#definitions/Request"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "404": {
+            "description": "Order with this ID doesn't exist.",
             "schema": {
               "type": "object",
               "properties": {
