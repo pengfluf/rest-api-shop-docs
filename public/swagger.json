@@ -160,6 +160,9 @@
         "operationId": "getAccountInfo",
         "consumes": ["application/json"],
         "produces": ["application/json"],
+        "security": [{
+          "api_key": []
+        }],
         "responses": {
           "200": {
             "description": "Account info successfully received.",
@@ -211,6 +214,9 @@
         "operationId": "deleteAccount",
         "consumes": ["application/json"],
         "produces": ["application/json"],
+        "security": [{
+          "api_key": []
+        }],
         "responses": {
           "200": {
             "description": "Account successfully deleted.",
@@ -311,6 +317,9 @@
         "operationId": "createProduct",
         "consumes": ["multipart/form-data"],
         "produces": ["application/json"],
+        "security": [{
+          "api_key": []
+        }],
         "parameters": [{
           "name": "name",
           "in": "body",
@@ -430,6 +439,9 @@
         "operationId": "updateProduct",
         "consumes": ["application/json"],
         "produces": ["application/json"],
+        "security": [{
+          "api_key": []
+        }],
         "parameters": [{
           "name": "name",
           "in": "body",
@@ -504,6 +516,9 @@
         "operationId": "deleteProduct",
         "consumes": ["application/json"],
         "produces": ["application/json"],
+        "security": [{
+          "api_key": []
+        }],
         "responses": {
           "200": {
             "description": "Product successfully deleted.",
@@ -573,6 +588,9 @@
         "operationId": "getAllOrders",
         "consumes": ["application/json"],
         "produces": ["application/json"],
+        "security": [{
+          "api_key": []
+        }],
         "responses": {
           "200": {
             "description": "All orders successfully received.",
@@ -624,6 +642,9 @@
         "operationId": "createProduct",
         "consumes": ["application/json"],
         "produces": ["application/json"],
+        "security": [{
+          "api_key": []
+        }],
         "parameters": [{
           "name": "productID",
           "in": "body",
@@ -714,6 +735,9 @@
         "operationId": "getOrder",
         "consumes": ["application/json"],
         "produces": ["application/json"],
+        "security": [{
+          "api_key": []
+        }],
         "responses": {
           "200": {
             "description": "Order successfully received.",
@@ -769,6 +793,9 @@
         "operationId": "deleteOrder",
         "consumes": ["application/json"],
         "produces": ["application/json"],
+        "security": [{
+          "api_key": []
+        }],
         "responses": {
           "200": {
             "description": "Order successfully deleted.",
