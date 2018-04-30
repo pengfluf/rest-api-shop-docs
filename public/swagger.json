@@ -13,8 +13,6 @@
       "name": "MIT"
     }
   },
-  "host": "localhost:3002",
-  "basePath": "/v2",
   "tags": [
     {
       "name": "User",
